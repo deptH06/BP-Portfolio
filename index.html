@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bibhav Patnaik — Folio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=Space+Grotesk:wght@500;700;800&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Cursor Spotlight Layer -->
+  <div id="cursorSpotlight" class="cursor-spotlight"></div>
+
+  <!-- Abstract Interactive Wave Canvas -->
+  <canvas id="waveCanvas" class="wave-bg"></canvas>
+
+  <!-- Background Continuous Audio -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="assets/music.mp3" type="audio/mp3">
+  <source src="https://assets.codepen.io/3364143/synthwave-bg-music.mp3" type="audio/mp3">
+</audio>
+
+<!-- Floating Music Mute / Unmute Button -->
+<button id="musicToggleBtn" class="music-toggle-btn" aria-label="Toggle Sound" title="Sound Control">
+  <div class="sound-icon-wrapper">
+    <!-- Unmuted Speaker Icon (Visible when playing) -->
+    <svg class="speaker-icon icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <path class="sound-wave sound-wave-1" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+      <path class="sound-wave sound-wave-2" d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+    </svg>
+    <!-- Muted Speaker Icon (Visible when muted) -->
+    <svg class="speaker-icon icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <line x1="23" y1="9" x2="17" y2="15"></line>
+      <line x1="17" y1="9" x2="23" y2="15"></line>
+    </svg>
+  </div>
+  <span id="musicLabel" class="music-label">SOUND ON</span>
+</button>
+
+  <!-- Floating Music Toggle Controller -->
+  <button id="musicToggleBtn" class="music-toggle-btn" aria-label="Toggle Sound" title="Mute / Unmute">
+    <div class="sound-icon-wrapper">
+      <svg class="speaker-icon icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <path class="sound-wave sound-wave-1" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        <path class="sound-wave sound-wave-2" d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+      </svg>
+      <svg class="speaker-icon icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <line x1="23" y1="9" x2="17" y2="15"></line>
+        <line x1="17" y1="9" x2="23" y2="15"></line>
+      </svg>
+    </div>
+    <span id="musicLabel" class="music-label">SOUND ON</span>
+  </button>
+
+  <!-- Fake Demo Loading Curtain -->
+  <div id="demoLoader" class="demo-loader hidden">
+    <div class="demo-loader-inner">
+      <div class="demo-status-text">INITIALIZING PORTFOLIO...</div>
+      <div class="demo-progress-track">
+        <div id="demoProgressBar" class="demo-progress-fill"></div>
+      </div>
+      <span id="demoPercent" class="demo-percent">0%</span>
+    </div>
+  </div>
+
+  <!-- STANDALONE WELCOME VIEW (Live Spiderman Footage) -->
+  <div id="welcomeScreen" class="welcome-screen">
+    <video id="spidermanVideo" class="spiderman-bg-video" autoplay muted loop playsinline preload="auto">
+      <source src="assets/spiderman.mp4" type="video/mp4">
+      <source src="https://assets.codepen.io/3364143/spider-man-bg.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay-tint"></div>
+
+    <div class="welcome-center">
+      <h1 class="welcome-heading">
+        <span class="welcome-prefix blur-pop-in">Welcome,</span>
+        <span class="welcome-name blur-pop-in">BIBHAV PATNAIK</span>
+      </h1>
+      <button id="letzzGoBtn" class="btn btn-primary letzz-go-btn blur-pop-in">
+        <span class="emoji-icon">:]</span> letzz go
+      </button>
+    </div>
+  </div>
+
+  <!-- APP VIEW (Top Navigation & Single-View Panel) -->
+  <div id="appContainer" class="app-container hidden">
+
+    <!-- Top Navigation Pane -->
+    <header class="navbar-wrapper">
+      <nav class="navbar tyre-track-bg">
+        <button class="brand-badge nav-tab-btn" data-target="about">BP.</button>
+        <div class="nav-links">
+          <button class="nav-item nav-tab-btn active" data-target="about">ABOUT</button>
+          <button class="nav-item nav-tab-btn" data-target="skills">SKILLS</button>
+          <button class="nav-item nav-tab-btn" data-target="projects">PROJECTS</button>
+          <button class="nav-item nav-tab-btn" data-target="certificates">CERTIFICATES</button>
+          <button class="nav-item nav-tab-btn" data-target="contact">CONTACT</button>
+        </div>
+        <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">
+          <span class="theme-icon">◐</span>
+        </button>
+      </nav>
+    </header>
+
+    <main class="single-viewport-container">
+
+      <!-- Genre 1: About (Academics & Theoretical Core) -->
+      <section id="pane-about" class="view-pane active">
+        <div class="slab-card throbbing-card">
+          <div class="slab-header">
+            <h2 class="slab-title">ABOUT ME.</h2>
+          </div>
+          
+          <div class="about-grid">
+            <!-- Left Side: Text Details -->
+            <div class="about-text">
+              <p class="lead-text">
+                I am Bibhav Patnaik an undergrad student following up with AI, Development, Management, and Tech Advancement.
+              </p>
+              <p class="sub-text">
+                Pursuing Btech CSE from ITER-SOA University as a 3rd year student with a curious mindset, passion for learning, keen interest to build and understand digital products. Currently a Core Member of IEC club in Event Management group, helping out to create a good workflow in events.
+              </p>
+            </div>
+
+            <!-- Right Side: Squarish Photo Positioned Above AI Certified -->
+            <div class="academic-cards">
+              <div class="about-photo-wrapper">
+                <img src="assets/DEEP1.jpg" alt="Bibhav Patnaik" class="about-avatar" />
+              </div>
+
+              <div class="stat-card">
+                <span class="stat-val">AI Certified</span>
+                <span class="stat-lbl">Hands-on Workshops</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Genre 2: Skills -->
+      <section id="pane-skills" class="view-pane">
+        <div class="slab-card throbbing-card">
+          <div class="slab-header">
+            <h2 class="slab-title">TECHNICAL SKILLS.</h2>
+          </div>
+          <div class="skills-grid">
+            <div class="skill-item">
+              <h4>Communucation</h4>
+              <p>Effective, easy to explain, interactive communication helping others for decison making.</p>
+            </div>
+            <div class="skill-item">
+              <h4>Management</h4>
+              <p>Having good management skills and implementing in channelizing work flow.</p>
+            </div>
+            <div class="skill-item">
+              <h4>AI Tools</h4>
+              <p>Using AI tools effectively for user purpose actities
+                [ChatGPT, Gemini, Claude, Replit, Lovable etc..].</p>
+            </div>
+            <div class="skill-item">
+              <h4>Languages</h4>
+              <p>Java, Python, HTML, JavaScripts, CSS</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Genre 3: Projects -->
+      <section id="pane-projects" class="view-pane">
+        <div class="slab-card throbbing-card">
+          <div class="slab-header">
+            <h2 class="slab-title">PROJECTS.</h2>
+          </div>
+          <div class="genre-grid">
+            <div class="broad-tile">
+              <div class="tile-tag">WEB SYSTEMS & GRAPHICS</div>
+              <h3 class="tile-title">Interactive Canvas Portfolio Engine</h3>
+              <p class="tile-desc">A single-viewport portfolio web application portraying About, Skills, Projects, Certificates and Contact sections with a interactive immersive view.</p>
+              <div class="tile-footer">
+                <button class="tile-link nav-tab-btn" data-target="contact">Inquire →</button>
+              </div>
+            </div>
+            <div class="tile-footer">
+          <span>HTML5 • CSS3 • Canvas API • JavaScript</span>
+          <span class="badge-status">Active Project</span>
+        </div>
+      </div>
+      </section>
+
+<!-- Genre 4: Certificates & Credentials -->
+<section id="pane-certificates" class="view-pane">
+  <div class="slab-card throbbing-card">
+    <div class="slab-header">
+      <h2 class="slab-title">CERTIFICATES.</h2>
+    </div>
+    <div class="cert-grid">
+      <!-- 1st Certificate: Anthropic AI Fluency -->
+      <div class="cert-card clickable-cert" data-cert-src="assets/Anthropic.png" data-cert-title="AI Fluency: Framework & Foundations — Anthropic">
+        <span class="cert-badge">ANTHROPIC CERTIFIED</span>
+        <h3>AI Fluency: Framework & Foundations</h3>
+        <p>Opportunity to explore how AI can be leveraged to enhance productivity, problem-solving, creativity, and real-world workflows, also explaining 4D Framework..</p>
+        <span class="cert-view-cta">PREVIEW ↗</span>
+      </div>
+
+      <!-- 2nd Certificate: LinkedIn Learning Prompt Engineering -->
+      <div class="cert-card clickable-cert" data-cert-src="assets/linkedin.png" data-cert-title="Introduction to Prompt Engineering for Generative AI — LinkedIn Learning">
+        <span class="cert-badge">LINKEDIN LEARNING</span>
+        <h3>Introduction to Prompt Engineering for Generative AI</h3>
+        <p>Understanding of AI fundamentals, prompt engineering, and the practical applications of generative AI in solving real-world problems..</p>
+        <span class="cert-view-cta">PREVIEW ↗</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Certificate Pop-up Preview Modal -->
+<div id="certModal" class="cert-modal hidden">
+  <div class="cert-modal-backdrop" id="certModalBackdrop"></div>
+  <div class="cert-modal-content">
+    <div class="cert-modal-header">
+      <h3 id="certModalTitle" class="cert-modal-title">Certificate Preview</h3>
+      <button class="cert-modal-close" id="certModalCloseBtn" aria-label="Close modal">&times;</button>
+    </div>
+    <div class="cert-frame-wrapper">
+      <img id="certModalImg" src="" alt="Certificate Preview" style="width: 100%; height: 100%; object-fit: contain; display: block;" />
+    </div>
+  </div>
+</div>
+
+<!-- Genre 5: Contact & Profiles -->
+<section id="pane-contact" class="view-pane">
+  <div class="slab-card throbbing-card text-center">
+    <div class="slab-header">
+      <h2 class="slab-title">CONNECT BY:</h2>
+    </div>
+    <p class="lead-text center-text-width">
+      Let's connect! Reach out directly via LinkedIn, explore my source code repositories on GitHub.
+        And all Set.
+    </p>
+
+    <div class="contact-links-grid">
+      <!-- LinkedIn Direct Profile Link -->
+      <a href="https://www.linkedin.com/in/bibhav-patnaik-7786b2393/?skipRedirect=true" class="btn btn-primary contact-btn" target="_blank" rel="noopener noreferrer">
+        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+          <rect width="4" height="12" x="2" y="9"></rect>
+          <circle cx="4" cy="4" r="2"></circle>
+        </svg>
+        <span>LinkedIn Profile</span>
+      </a>
+
+      <!-- GitHub Direct Profile Link -->
+      <a href="https://github.com/deptH06" class="btn btn-secondary contact-btn" target="_blank" rel="noopener noreferrer">
+        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+          <path d="M9 18c-4.51 2-5-2-7-2"></path>
+        </svg>
+        <span>GitHub Profile</span>
+      </a>
+    </div>
+  </div>
+</section>
+  <script src="script.js"></script>
+</body>
+</html>
